@@ -5,14 +5,11 @@ date: "3/10/2021"
 output: html_document
 ---
 
-```{r 1}
+```{r}
 library(tidyverse) 
 library(dplyr)
-install.packages("mosaicData")
+install.packages("mosaicData",repos = "http://cran.us.r-project.org")
 library(mosaicData) 
-data(Whickham)
-?Whickham
-view(Whickham)
 ```
 
 ###Exercise 1
@@ -25,9 +22,9 @@ view(Whickham)
 
 
 ###Exercise 3
-```{r}
 ###How many variables are in this dataset? What type of variable is each? Display each variable using an appropriate visualization.
 ###3 variables- Outcome & Smoker- explanatory; age: response variable
+```{r}
 ggplot(data=Whickham, aes(x=outcome)) +
   geom_bar(stat="count")
 ggplot(data=Whickham, aes(x=age)) +
@@ -48,13 +45,13 @@ Whickham %>%
   group_by(smoker) %>%
   mutate(prop_death = n / sum(n)) %>%
   ungroup()
-view(Whickham2)
 ggplot(Whickham, aes(x = outcome, 
                      fill = smoker)) +
   geom_bar(position = "fill") + 
   labs(title = "Health Outcomes",
        y = NULL, x = NULL)
 ```
+###I expected the disparity to be much larger, so more people who smoke to be dead vs. alive. 
 ###Exercise 6
 ```{r}
 Whickham<- Whickham %>%
@@ -72,7 +69,7 @@ view(Whickham)
 ###Exercise 7
 ```{r}
 Whickham %>%
-  count(smoker, age, outcome)
+  count(smoker, age_cat, outcome)
 Whickham %>%
   count(smoker, outcome)
 
@@ -82,7 +79,7 @@ ggplot(Whickham, aes(x = outcome_smoker,
   labs(title = "Health Outcomes",
        y = NULL, x = NULL)
 ```
-
+###relationship between smoking and health outcome became much stronger when accounting for age. Comparing the 65+ category, those who didn't smoke had a much greater chance of being alive. 
 
 
 
